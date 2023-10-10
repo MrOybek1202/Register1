@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Register1.DataLayer;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<RegestorDbContext>(option =>
+option.UseNpgsql(builder.Configuration.GetConnectionString("RegistorConnection")));
 
 var app = builder.Build();
 
