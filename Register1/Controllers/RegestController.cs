@@ -6,11 +6,11 @@ namespace Register1.Controllers
 {
     [ApiController]
     [Route("api/[controler]/[action]")]
-    public class RegestController : Controller
+    public class RegestController : ControllerBase
     {
-        private readonly Servace _service;
+        private readonly IService _service;
 
-        public RegestController(Servace service)
+        public RegestController(IService service)
         {
             _service = service;
         }
@@ -33,6 +33,17 @@ namespace Register1.Controllers
                 return NotFound();
             }
             return Ok();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllData()
+        {
+            var res = await _service.GetAllUsersAsync();
+            if(res == null)
+            {
+                return NoContent();
+
+            }
+            return Ok(res);
         }
     }
 

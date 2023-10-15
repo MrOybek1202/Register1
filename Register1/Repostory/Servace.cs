@@ -1,4 +1,5 @@
 ﻿using LinqToDB;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Register1.DataLayer;
 using Register1.Model;
@@ -13,6 +14,19 @@ namespace Register1.Repostory
         {
             _registr = registr;
         }
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            var result = await _registr.Users.ToListAsync();
+
+            if(result == null)
+            {
+                return result;
+
+            }
+            return result;
+        }
+
         public async Task<bool> LogIn(string email, string password)
         {
             var res = await _registr.Users.FirstOrDefaultAsync(p => p.Email == email && p.Password == password);
