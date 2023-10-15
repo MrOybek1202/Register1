@@ -5,7 +5,7 @@ using Register1.Repostory;
 namespace Register1.Controllers
 {
     [ApiController]
-    [Route("api/[controler]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class RegestController : ControllerBase
     {
         private readonly IService _service;
