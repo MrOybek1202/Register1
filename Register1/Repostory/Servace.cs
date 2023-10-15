@@ -27,7 +27,20 @@ namespace Register1.Repostory
             return result;
         }
 
-        public async Task<bool> LogIn(string email, string password)
+        public async Task<User> GetByIDAsync(int id)
+        {
+            var res = await _registr.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if(res == null)
+            {
+                return res;
+
+            }
+            return res;
+        }
+
+        
+
+        public async Task<bool> LogInAsync(string email, string password)
         {
             var res = await _registr.Users.FirstOrDefaultAsync(p => p.Email == email && p.Password == password);
             if (res == null)
@@ -38,6 +51,18 @@ namespace Register1.Repostory
             return true;
         }
 
+        public async Task<bool> RemoveUserAsync(int id)
+        {
+            var res = await _registr.Users.FirstOrDefaultAsync(p => p.Id == id);
+            if(res == null)
+            {
+                return false;
+
+            }
+            _registr.Users.Remove(res);
+            _registr.SaveChanges();
+            return true;
+        }
 
         public async Task<bool> SignUpAsync(User user)
         {

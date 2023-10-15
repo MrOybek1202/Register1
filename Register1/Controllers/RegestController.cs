@@ -15,7 +15,7 @@ namespace Register1.Controllers
             _service = service;
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp([FromForm] User user)
+        public async Task<IActionResult> SignUpAsync([FromForm] User user)
         {
             bool res = await _service.SignUpAsync(user);
             if (res == false)
@@ -25,22 +25,44 @@ namespace Register1.Controllers
             return Ok();
         }
         [HttpGet]
-        public async Task<IActionResult> LogIn(string email, string password)
+        public async Task<IActionResult> LogInAsync(string email, string password)
         {
-            var res = await _service.LogIn(email, password);
+            var res = await _service.LogInAsync(email, password);
             if (res == false)
             {
                 return NotFound();
             }
-            return Ok();
+            return Ok(res);
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllData()
+        public async Task<IActionResult> GetAllDataAsync()
         {
             var res = await _service.GetAllUsersAsync();
             if(res == null)
             {
                 return NoContent();
+
+            }
+            return Ok(res);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            var res = await _service.GetByIDAsync(id);
+            if (res == null)
+            {
+                return NotFound();
+
+            }
+            return Ok(res);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> ISDalate(int id)
+        {
+            bool res = await _service.RemoveUserAsync(id);
+            if(res == false)
+            {
+                return NotFound();
 
             }
             return Ok(res);
